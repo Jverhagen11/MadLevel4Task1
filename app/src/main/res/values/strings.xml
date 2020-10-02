@@ -12,4 +12,5 @@
     <string name="product_hint">product</string>
     <string name="amount_hint">amount</string>
     <string name="title">Add a product to your list!</string>
+    <string name="dialog_add_btn">Add</string>
 </resources>
