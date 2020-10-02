@@ -45,7 +45,9 @@ class ShoppingListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shoppinglist, container, false)
+        binding = FragmentShoppinglistBinding.inflate(inflater, container, false)
+        return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,7 +58,7 @@ class ShoppingListFragment : Fragment() {
         initRv()
 
         fabAdd.setOnClickListener {
-            showAddProductdialog();
+            showAddProductDialog();
         }
 
 
@@ -75,6 +77,7 @@ class ShoppingListFragment : Fragment() {
                 DividerItemDecoration.VERTICAL
             )
         )
+
         createItemTouchHelper().attachToRecyclerView(rvProducts)
 
         rvProducts.apply {
@@ -108,7 +111,7 @@ class ShoppingListFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val productToDelete = products[position]
+
 
 
                 mainScope.launch {
@@ -123,7 +126,7 @@ class ShoppingListFragment : Fragment() {
     }
 
     @SuppressLint("InflateParams")
-    private fun showAddProductdialog() {
+    private fun showAddProductDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.title))
         val dialogLayout = layoutInflater.inflate(R.layout.fragment_add_product, null)
@@ -131,7 +134,7 @@ class ShoppingListFragment : Fragment() {
         val amount = dialogLayout.findViewById<EditText>(R.id.etAmount)
 
         builder.setView(dialogLayout)
-        builder.setPositiveButton(R.string.dialog_add_btn) { _: DialogInterface, _: Int ->
+        builder.setPositiveButton(R.string.add_btn) { _: DialogInterface, _: Int ->
             addProduct(productName, amount)
         }
         builder.show()
@@ -141,8 +144,8 @@ class ShoppingListFragment : Fragment() {
         if (validateFields(txtProductName, txtAmount)) {
             mainScope.launch {
                 val product = Product(
-                    productName = tvProductName.text.toString(),
-                    quantity = tvQuantity.text.toString().toLong()
+                    productName = txtProductName.text.toString(),
+                    quantity = txtAmount.text.toString().toLong()
                 )
 
                 withContext(Dispatchers.IO) {

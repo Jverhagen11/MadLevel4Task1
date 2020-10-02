@@ -16,7 +16,7 @@ class ProductAdapter (private val products: List<Product>) :
 
         fun dataBind(product: Product) {
             binding.tvProductName.text = product.productName
-            binding.tvQuantity.text = product.quantity.toString()
+            binding.tvQuantity.text = product.quantity.toString() + "X"
         }
     }
 
